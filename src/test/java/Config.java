@@ -10,5 +10,5 @@ public class Config {
         String VISUAL_USER = "visual_user";
     }
     // Password for each user
-    public static final String SECRET_SAUCE = "secret_sauce";
+    public static final String PASSWORD = "secret_sauce";
 }
