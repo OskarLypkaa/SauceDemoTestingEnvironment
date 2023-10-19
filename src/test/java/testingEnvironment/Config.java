@@ -1,3 +1,5 @@
+package testingEnvironment;
+
 public class Config {
 
     // Usernames

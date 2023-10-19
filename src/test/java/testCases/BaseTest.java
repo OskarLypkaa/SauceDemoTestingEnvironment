@@ -1,10 +1,14 @@
+package testCases;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import testingEnvironment.Config;
+import testingEnvironment.ErrorHandler;
 
 public class BaseTest {
 
-    TestSetup testSetup = new TestSetup();
+    testingEnvironment.TestSetup testSetup = new testingEnvironment.TestSetup(Config.Users.STANDARD_USER);
     @Before
     public void setUp() {
         testSetup.setUp();
@@ -32,6 +36,7 @@ public class BaseTest {
     public void tearDown() {
         testSetup.tearDown();
     }
+
 
     private String getTestMethodName() {
         StackTraceElement[] stackTrace = Thread.currentThread().getStackTrace();

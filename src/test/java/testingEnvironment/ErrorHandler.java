@@ -1,4 +1,4 @@
-
+package testingEnvironment;
 
 public class ErrorHandler {
 

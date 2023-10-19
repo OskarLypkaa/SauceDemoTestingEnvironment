@@ -1,3 +1,5 @@
+package testingEnvironment;
+
 import org.junit.After;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -7,6 +9,11 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class TestSetup {
+    private String userType;
+    public TestSetup(String userType) {
+        this.userType = userType;
+    }
+
     private static WebDriver driver;
 
     public void setUp() {
@@ -21,7 +28,7 @@ public class TestSetup {
 
         // Website login
         WebElement usernameField = driver.findElement(By.id("user-name"));
-        usernameField.sendKeys(Config.Users.STANDARD_USER);
+        usernameField.sendKeys(userType);
 
         WebElement passwordField = driver.findElement(By.id("password"));
         passwordField.sendKeys(Config.PASSWORD);
