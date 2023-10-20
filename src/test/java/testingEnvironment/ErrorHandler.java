@@ -2,8 +2,8 @@ package testingEnvironment;
 
 public class ErrorHandler {
 
-    public static void warning(String errorMessage, String testName, Long testTime) {
-            float testTimeInSeconds = getTestTime(testTime);
+    public static void warning(String errorMessage, String testName, long startTestTime, long endTestTime) {
+            float testTimeInSeconds = getTestTime(startTestTime, endTestTime);
             String extractedErrorMessage = extractErrorMessage(errorMessage);
             displayErrorInfo(extractedErrorMessage, testName, testTimeInSeconds);
     }
@@ -16,9 +16,9 @@ public class ErrorHandler {
         System.out.println("############");
     }
 
-    public static Float getTestTime(Long startTime) {
-        long testDuration = (System.currentTimeMillis()-startTime);
-        return (float)testDuration/100;
+    public static Float getTestTime(long startTime, long endTime) {
+        long testDuration = (endTime-startTime);
+        return (float)testDuration/1000;
     }
     private static String extractErrorMessage(String fullErrorMessage) {
         int endIndex = fullErrorMessage.indexOf("\n");

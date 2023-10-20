@@ -14,7 +14,7 @@ public class TestSetup {
         this.userType = userType;
     }
 
-    private static WebDriver driver;
+    public static WebDriver driver;
 
     public void setUp() {
         // Initialization of Google Chrome webdriver
@@ -33,7 +33,7 @@ public class TestSetup {
         WebElement passwordField = driver.findElement(By.id("password"));
         passwordField.sendKeys(Config.PASSWORD);
 
-        WebElement loginButton = driver.findElement(By.id("login-buttton"));
+        WebElement loginButton = driver.findElement(By.id("login-button"));
         loginButton.click();
 
         WebDriverWait wait = new WebDriverWait(driver, 10);
