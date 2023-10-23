@@ -11,17 +11,20 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 public class TestSetup {
     private String userType;
     public static WebDriver driver;
+
     public TestSetup(String userType) {
         this.userType = userType;
     }
 
+    // Initialize the WebDriver (ChromeDriver)
     public void setUp() {
         // Initialization of Google Chrome webdriver
         System.setProperty("webdriver.chrome.driver", "D:\\atari\\Studia praca\\java\\saucedemo\\saucedemo\\src\\test\\resources\\drivers\\chromedriver.exe");
         driver = new ChromeDriver();
     }
 
-    public WebDriver testInitialization(){
+    // Initialize the test environment and perform login
+    public WebDriver testInitialization() {
         // Opening starting site
         driver.get("https://www.saucedemo.com");
 
@@ -37,12 +40,15 @@ public class TestSetup {
 
         WebDriverWait wait = new WebDriverWait(driver, 10);
 
-        // Waiting for website to be fully loaded
+        // Waiting for the website to be fully loaded
         wait.until(ExpectedConditions.titleIs("Swag Labs"));
         wait.until(ExpectedConditions.urlContains("https://www.saucedemo.com/inventory.html"));
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("react-burger-menu-btn")));
+
         return driver;
     }
+
+    // Get the name of the currently executing test method
     public String getTestMethodName() {
         StackTraceElement[] stackTrace = Thread.currentThread().getStackTrace();
 
@@ -54,18 +60,19 @@ public class TestSetup {
         }
         return "";
     }
-    public int errorLine(StackTraceElement[] stackTrace, String methodName)
-    {
+
+    // Get the line number in the code where an error occurred for a specific test method
+    public int errorLine(StackTraceElement[] stackTrace, String methodName) {
         for (StackTraceElement element : stackTrace) {
-            if(element.getMethodName() == methodName) {
+            if (element.getMethodName() == methodName) {
                 return element.getLineNumber();
             }
         }
         return 0;
     }
 
-
     @After
+    // Close the WebDriver after the test
     public void tearDown() {
         if (driver != null) {
             driver.quit();
