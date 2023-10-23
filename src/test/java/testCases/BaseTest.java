@@ -12,10 +12,11 @@ import java.time.LocalDate;
 public class BaseTest {
 
     testingEnvironment.TestSetup testSetup = new testingEnvironment.TestSetup(Config.Users.STANDARD_USER);
-    String className = BaseTest.class.getSimpleName();
-    LocalDate currentDate = LocalDate.now();
+
     @Before
     public void setUp() {
+        String className = BaseTest.class.getSimpleName();
+        LocalDate currentDate = LocalDate.now();
         TestReportGenerator.startReport("D:\\atari\\Studia praca\\java\\saucedemo\\saucedemo\\src\\test\\test-output\\"+className+"_"+currentDate+".html");
         testSetup.setUp();
     }
@@ -35,7 +36,7 @@ public class BaseTest {
             TestReportGenerator.pass("This test has passed.");
         } catch(Throwable e) {
             long endTime = System.currentTimeMillis();
-            String methodName = getTestMethodName();
+            String methodName = testSetup.getTestMethodName();
             ErrorHandler.warning(e.getMessage() ,methodName ,startTime, endTime);
             TestReportGenerator.fail("This test has failed.");
             throw new Exception();
@@ -49,16 +50,6 @@ public class BaseTest {
     }
 
 
-    private String getTestMethodName() {
-        StackTraceElement[] stackTrace = Thread.currentThread().getStackTrace();
 
-        for (int i = 1; i < stackTrace.length; i++) {
-            StackTraceElement element = stackTrace[i];
-            if (element.getClassName().equals(getClass().getName()) && !element.getMethodName().equals("getTestMethodName")) {
-                return element.getMethodName();
-            }
-        }
-        return "";
-    }
 
 }

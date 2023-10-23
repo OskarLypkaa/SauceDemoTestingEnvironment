@@ -44,7 +44,17 @@ public class TestSetup {
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("react-burger-menu-btn")));
 
     }
+    public String getTestMethodName() {
+        StackTraceElement[] stackTrace = Thread.currentThread().getStackTrace();
 
+        for (int i = 1; i < stackTrace.length; i++) {
+            StackTraceElement element = stackTrace[i];
+            if (element.getClassName().startsWith("testCases.") && !element.getMethodName().equals("getTestMethodName")) {
+                return element.getMethodName();
+            }
+        }
+        return "";
+    }
     @After
     public void tearDown() {
         if (driver != null) {
