@@ -10,11 +10,10 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class TestSetup {
     private String userType;
+    public static WebDriver driver;
     public TestSetup(String userType) {
         this.userType = userType;
     }
-
-    public static WebDriver driver;
 
     public void setUp() {
         // Initialization of Google Chrome webdriver
@@ -22,7 +21,7 @@ public class TestSetup {
         driver = new ChromeDriver();
     }
 
-    public void testInitialization(){
+    public WebDriver testInitialization(){
         // Opening starting site
         driver.get("https://www.saucedemo.com");
 
@@ -33,7 +32,7 @@ public class TestSetup {
         WebElement passwordField = driver.findElement(By.id("password"));
         passwordField.sendKeys(Config.PASSWORD);
 
-        WebElement loginButton = driver.findElement(By.id("login-buttton"));
+        WebElement loginButton = driver.findElement(By.id("login-button"));
         loginButton.click();
 
         WebDriverWait wait = new WebDriverWait(driver, 10);
@@ -42,7 +41,7 @@ public class TestSetup {
         wait.until(ExpectedConditions.titleIs("Swag Labs"));
         wait.until(ExpectedConditions.urlContains("https://www.saucedemo.com/inventory.html"));
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("react-burger-menu-btn")));
-
+        return driver;
     }
     public String getTestMethodName() {
         StackTraceElement[] stackTrace = Thread.currentThread().getStackTrace();
@@ -55,6 +54,17 @@ public class TestSetup {
         }
         return "";
     }
+    public int errorLine(StackTraceElement[] stackTrace, String methodName)
+    {
+        for (StackTraceElement element : stackTrace) {
+            if(element.getMethodName() == methodName) {
+                return element.getLineNumber();
+            }
+        }
+        return 0;
+    }
+
+
     @After
     public void tearDown() {
         if (driver != null) {

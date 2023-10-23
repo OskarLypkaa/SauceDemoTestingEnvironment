@@ -3,6 +3,7 @@ package testCases;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.openqa.selenium.WebDriver;
 import testingEnvironment.Config;
 import testingEnvironment.ErrorHandler;
 import testingEnvironment.TestReportGenerator;
@@ -10,14 +11,11 @@ import testingEnvironment.TestReportGenerator;
 import java.time.LocalDate;
 
 public class BaseTest {
-
     testingEnvironment.TestSetup testSetup = new testingEnvironment.TestSetup(Config.Users.STANDARD_USER);
 
     @Before
     public void setUp() {
-        String className = BaseTest.class.getSimpleName();
-        LocalDate currentDate = LocalDate.now();
-        TestReportGenerator.startReport("D:\\atari\\Studia praca\\java\\saucedemo\\saucedemo\\src\\test\\test-output\\"+className+"_"+currentDate+".html");
+        TestReportGenerator.startReport("D:\\atari\\Studia praca\\java\\saucedemo\\saucedemo\\src\\test\\test-output\\"+BaseTest.class.getSimpleName()+"_"+LocalDate.now()+".html");
         testSetup.setUp();
     }
 
@@ -25,19 +23,18 @@ public class BaseTest {
     public void baseTest_001() throws Exception {
         TestReportGenerator.createTest("Test_01");
         long startTime = System.currentTimeMillis();
-        try
-        {
-            testSetup.testInitialization();
+        try {
+            WebDriver driver = testSetup.testInitialization();
             // Main part of a test
 
 
 
             // End of a test's main part
             TestReportGenerator.pass("This test has passed.");
-        } catch(Throwable e) {
-            long endTime = System.currentTimeMillis();
-            String methodName = testSetup.getTestMethodName();
-            ErrorHandler.warning(e.getMessage() ,methodName ,startTime, endTime);
+        }
+        catch(Throwable e) {
+            int errorLine = testSetup.errorLine(e.getStackTrace(), testSetup.getTestMethodName());
+            ErrorHandler.warning(e.getMessage() ,testSetup.getTestMethodName(), errorLine, startTime, System.currentTimeMillis());
             TestReportGenerator.fail("This test has failed.");
             throw new Exception();
         }
@@ -48,8 +45,4 @@ public class BaseTest {
         testSetup.tearDown();
         TestReportGenerator.flushReport();
     }
-
-
-
-
 }

@@ -2,16 +2,16 @@ package testingEnvironment;
 
 public class ErrorHandler {
 
-    public static void warning(String errorMessage, String testName, long startTestTime, long endTestTime) {
+    public static void warning(String errorMessage,  String testName, int errorLine,long startTestTime, long endTestTime) {
             float testTimeInSeconds = getTestTime(startTestTime, endTestTime);
             String extractedErrorMessage = extractErrorMessage(errorMessage);
-            displayErrorInfo(extractedErrorMessage, testName, testTimeInSeconds);
+            displayErrorInfo(extractedErrorMessage, errorLine, testName, testTimeInSeconds);
     }
 
-    private static void displayErrorInfo(String error, String testName, float testTimeInSeconds) {
+    private static void displayErrorInfo(String error,int errorLine , String testName, float testTimeInSeconds) {
         System.out.println("############");
         System.out.println("Failed test: " + testName);
-        System.out.println(error);
+        System.out.println(error+" | line:"+errorLine);
         System.out.println("Test executed in: "+testTimeInSeconds+"s");
         System.out.println("############");
     }
