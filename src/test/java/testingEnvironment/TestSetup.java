@@ -33,7 +33,7 @@ public class TestSetup {
         WebElement passwordField = driver.findElement(By.id("password"));
         passwordField.sendKeys(Config.PASSWORD);
 
-        WebElement loginButton = driver.findElement(By.id("login-button"));
+        WebElement loginButton = driver.findElement(By.id("login-buttton"));
         loginButton.click();
 
         WebDriverWait wait = new WebDriverWait(driver, 10);
